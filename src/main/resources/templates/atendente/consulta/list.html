@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Consultas')}"></head>
+<body>
+    <header th:replace="~{fragments/header :: nav-atendente}"></header>
+
+    <main>
+        <div class="page-header">
+            <div>
+                <h1>Consultas</h1>
+                <p>Consultas cadastradas na clínica.</p>
+            </div>
+            <a class="btn btn-primario" th:href="@{/atendente/consulta/novo}">Nova consulta</a>
+        </div>
+
+        <div class="tabela-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Data/Hora</th>
+                        <th>Paciente</th>
+                        <th>Médico</th>
+                        <th>Observação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="consulta : ${consultas}">
+                        <td th:text="${consulta.dataHora}">2026-07-06 14:30</td>
+                        <td th:text="${consulta.paciente.nome}">Nome do paciente</td>
+                        <td th:text="${consulta.medico.nome}">Nome do médico</td>
+                        <td th:text="${consulta.observacao}">Observação</td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(consultas)}">
+                        <td colspan="4" class="vazio">Nenhuma consulta cadastrada ainda.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

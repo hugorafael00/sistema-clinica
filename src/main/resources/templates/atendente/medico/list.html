@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Médicos')}"></head>
+<body>
+    <header th:replace="~{fragments/header :: nav-atendente}"></header>
+
+    <main>
+        <div class="page-header">
+            <div>
+                <h1>Médicos</h1>
+                <p>Cadastro de médicos associados à clínica.</p>
+            </div>
+            <a class="btn btn-primario" th:href="@{/atendente/medico/novo}">Novo médico</a>
+        </div>
+
+        <div class="tabela-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>CRM</th>
+                        <th>Nome</th>
+                        <th>Especialidade</th>
+                        <th>Contato</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="medico : ${medicos}">
+                        <td th:text="${medico.crm}">123456</td>
+                        <td th:text="${medico.nome}">Nome do médico</td>
+                        <td th:text="${medico.especialidade}">Especialidade</td>
+                        <td th:text="${medico.contato}">Contato</td>
+                        <td class="acoes">
+                            <a th:href="@{/atendente/medico/editar/{crm}(crm=${medico.crm})}">Editar</a>
+                            <a th:href="@{/atendente/medico/excluir/{crm}(crm=${medico.crm})}"
+                               onclick="return confirm('Excluir este médico?');">Excluir</a>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(medicos)}">
+                        <td colspan="5" class="vazio">Nenhum médico cadastrado ainda.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

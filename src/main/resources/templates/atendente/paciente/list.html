@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Pacientes')}"></head>
+<body>
+    <header th:replace="~{fragments/header :: nav-atendente}"></header>
+
+    <main>
+        <div class="page-header">
+            <div>
+                <h1>Pacientes</h1>
+                <p>Cadastro de pacientes da clínica.</p>
+            </div>
+            <a class="btn btn-primario" th:href="@{/atendente/paciente/novo}">Novo paciente</a>
+        </div>
+
+        <div class="tabela-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>CPF</th>
+                        <th>Nome</th>
+                        <th>Contato</th>
+                        <th>Plano de saúde</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="paciente : ${pacientes}">
+                        <td th:text="${paciente.cpf}">000.000.000-00</td>
+                        <td th:text="${paciente.nome}">Nome do paciente</td>
+                        <td th:text="${paciente.contato}">Contato</td>
+                        <td th:text="${paciente.planoSaude}">Plano</td>
+                        <td class="acoes">
+                            <a th:href="@{/atendente/paciente/editar/{cpf}(cpf=${paciente.cpf})}">Editar</a>
+                            <a th:href="@{/atendente/paciente/excluir/{cpf}(cpf=${paciente.cpf})}"
+                               onclick="return confirm('Excluir este paciente?');">Excluir</a>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(pacientes)}">
+                        <td colspan="5" class="vazio">Nenhum paciente cadastrado ainda.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Medicamentos')}"></head>
+<body>
+    <header th:replace="~{fragments/header :: nav-atendente}"></header>
+
+    <main>
+        <div class="page-header">
+            <div>
+                <h1>Medicamentos</h1>
+                <p>Cadastro de medicamentos disponíveis para receituário.</p>
+            </div>
+            <a class="btn btn-primario" th:href="@{/atendente/medicamento/novo}">Novo medicamento</a>
+        </div>
+
+        <div class="tabela-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Dosagem</th>
+                        <th>Tipo</th>
+                        <th>Descrição</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="medicamento : ${medicamentos}">
+                        <td th:text="${medicamento.nome}">Nome do medicamento</td>
+                        <td th:text="${medicamento.dosagem}">Dosagem</td>
+                        <td th:text="${medicamento.tipoDosagem}">Tipo</td>
+                        <td th:text="${medicamento.descricao}">Descrição</td>
+                        <td class="acoes">
+                            <a th:href="@{/atendente/medicamento/editar/{codigo}(codigo=${medicamento.codigo})}">Editar</a>
+                            <a th:href="@{/atendente/medicamento/excluir/{codigo}(codigo=${medicamento.codigo})}"
+                               onclick="return confirm('Excluir este medicamento?');">Excluir</a>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(medicamentos)}">
+                        <td colspan="5" class="vazio">Nenhum medicamento cadastrado ainda.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

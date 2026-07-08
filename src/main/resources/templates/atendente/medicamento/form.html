@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Medicamento')}"></head>
+<body>
+    <header th:replace="~{fragments/header :: nav-atendente}"></header>
+
+    <main>
+        <div class="page-header">
+            <div>
+                <h1 th:text="${medicamento.codigo} != null ? 'Editar medicamento' : 'Novo medicamento'">Medicamento</h1>
+                <p>Preencha os dados do medicamento.</p>
+            </div>
+        </div>
+
+        <form class="card" method="post" th:action="@{/atendente/medicamento/salvar}" th:object="${medicamento}">
+
+            <input type="hidden" th:field="*{codigo}">
+
+            <div class="campo">
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" th:field="*{nome}" placeholder="Nome do medicamento" required>
+            </div>
+
+            <div class="campo">
+                <label for="dosagem">Dosagem</label>
+                <input type="text" id="dosagem" th:field="*{dosagem}" placeholder="Ex: 500mg">
+            </div>
+
+            <div class="campo">
+                <label for="tipoDosagem">Tipo de dosagem</label>
+                <input type="text" id="tipoDosagem" th:field="*{tipoDosagem}" placeholder="Ex: comprimido, xarope, injeção">
+            </div>
+
+            <div class="campo">
+                <label for="descricao">Descrição</label>
+                <textarea id="descricao" th:field="*{descricao}" rows="3" placeholder="Descrição do medicamento"></textarea>
+            </div>
+
+            <div class="campo">
+                <label for="observacao">Observação</label>
+                <textarea id="observacao" th:field="*{observacao}" rows="2" placeholder="Observações adicionais (opcional)"></textarea>
+            </div>
+
+            <div class="form-acoes">
+                <button type="submit" class="btn btn-primario">Salvar</button>
+                <a class="btn btn-secundario" th:href="@{/atendente/medicamento}">Cancelar</a>
+            </div>
+        </form>
+    </main>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Login do médico')}"></head>
+<body>
+    <header th:replace="~{fragments/header :: nav-guest}"></header>
+
+    <main style="max-width: 420px;">
+        <div class="page-header" style="border-bottom: none;">
+            <div>
+                <h1>Entrar</h1>
+                <p>Acesso restrito aos médicos da clínica.</p>
+            </div>
+        </div>
+
+        <form class="card" method="post" th:action="@{/medico/login}">
+
+            <p th:if="${erro}" th:text="${erro}"
+               style="background:#FBEAE8; color:#B3453D; padding:0.7rem 1rem; border-radius:8px; font-size:0.9rem; margin-top:0;">
+                Erro
+            </p>
+
+            <div class="campo">
+                <label for="crm">CRM</label>
+                <input type="text" id="crm" name="crm" placeholder="Número do CRM" required autofocus>
+            </div>
+
+            <div class="campo">
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" name="senha" placeholder="Senha" required>
+            </div>
+
+            <div class="form-acoes">
+                <button type="submit" class="btn btn-primario">Entrar</button>
+            </div>
+        </form>
+    </main>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

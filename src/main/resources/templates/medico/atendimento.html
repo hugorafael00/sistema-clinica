@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Atendimento')}"></head>
+<body>
+    <header th:replace="~{fragments/header :: nav-medico}"></header>
+
+    <main>
+        <div class="page-header">
+            <div>
+                <h1>Atendimento</h1>
+                <p th:text="${consulta.dataHora}">Data da consulta</p>
+            </div>
+            <span class="badge badge-pendente" th:if="${prontuario == null}">Pendente</span>
+            <span class="badge badge-realizada" th:if="${prontuario != null}">Realizada</span>
+        </div>
+
+        <!-- Dados do paciente -->
+        <section class="card" style="margin-bottom: 1.5rem;">
+            <h2 style="margin-top:0;">Paciente</h2>
+            <p><strong th:text="${consulta.paciente.nome}">Nome</strong></p>
+            <p style="color: var(--cor-texto-suave); margin: 0.2rem 0;">
+                CPF: <span th:text="${consulta.paciente.cpf}">000.000.000-00</span>
+            </p>
+            <p style="color: var(--cor-texto-suave); margin: 0.2rem 0;">
+                Contato: <span th:text="${consulta.paciente.contato}">-</span>
+            </p>
+            <p style="color: var(--cor-texto-suave); margin: 0.2rem 0;">
+                Endereço: <span th:text="${consulta.paciente.endereco}">-</span>
+            </p>
+            <p style="color: var(--cor-texto-suave); margin: 0.2rem 0;">
+                Plano de saúde: <span th:text="${consulta.paciente.planoSaude}">-</span>
+            </p>
+        </section>
+
+        <!-- Dados da consulta -->
+        <section class="card" style="margin-bottom: 1.5rem;">
+            <h2 style="margin-top:0;">Consulta</h2>
+            <p style="color: var(--cor-texto-suave); margin: 0.2rem 0;">
+                Data/Hora: <span th:text="${consulta.dataHora}">-</span>
+            </p>
+            <p style="color: var(--cor-texto-suave); margin: 0.2rem 0;" th:if="${consulta.dataHoraVolta}">
+                Retorno: <span th:text="${consulta.dataHoraVolta}">-</span>
+            </p>
+            <p style="color: var(--cor-texto-suave); margin: 0.2rem 0;">
+                Observação: <span th:text="${consulta.observacao}">-</span>
+            </p>
+        </section>
+
+        <!-- ===================== PRONTUARIO ===================== -->
+
+        <!-- Caso ainda NAO exista prontuario: formulario para criar -->
+        <section class="card" th:if="${prontuario == null}">
+            <h2 style="margin-top:0;">Registrar prontuário</h2>
+            <p style="color: var(--cor-texto-suave); margin-top: -0.5rem;">
+                A consulta só é considerada realizada após o registro do prontuário.
+            </p>
+
+            <form method="post" th:action="@{/medico/atendimento/{codigo}/prontuario(codigo=${consulta.codigo})}"
+                  th:object="${prontuarioNovo}">
+
+                <div class="campo">
+                    <label for="descricao">Descrição</label>
+                    <textarea id="descricao" th:field="*{descricao}" rows="4" placeholder="Descrição do atendimento" required></textarea>
+                </div>
+
+                <div class="campo">
+                    <label for="observacao">Observação</label>
+                    <textarea id="observacao" th:field="*{observacao}" rows="2" placeholder="Observações adicionais (opcional)"></textarea>
+                </div>
+
+                <div class="form-acoes">
+                    <button type="submit" class="btn btn-primario">Salvar prontuário</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Caso ja exista prontuario: exibe os dados -->
+        <section class="card" style="margin-bottom: 1.5rem;" th:if="${prontuario != null}">
+            <h2 style="margin-top:0;">Prontuário</h2>
+            <p style="margin: 0.2rem 0;" th:text="${prontuario.descricao}">Descrição</p>
+            <p style="color: var(--cor-texto-suave); margin: 0.2rem 0;" th:if="${prontuario.observacao}"
+               th:text="${prontuario.observacao}">Observação</p>
+        </section>
+
+        <!-- ===================== RECEITUARIO ===================== -->
+
+        <section class="card" th:if="${prontuario != null}">
+            <h2 style="margin-top:0;">Receituário</h2>
+            <p style="color: var(--cor-texto-suave); margin-top: -0.5rem;">
+                Opcional. Adicione um ou mais medicamentos, se necessário.
+            </p>
+
+            <!-- Lista de itens ja adicionados -->
+            <div class="tabela-wrap" style="margin-bottom: 1.5rem;" th:if="${not #lists.isEmpty(itens)}">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Medicamento</th>
+                            <th>Dosagem</th>
+                            <th>Intervalo entre doses</th>
+                            <th>Observação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="item : ${itens}">
+                            <td th:text="${item.medicamento.nome}">Nome do medicamento</td>
+                            <td th:text="${item.dosagem}">1</td>
+                            <td th:text="${item.intervaloEntreDoses} + 'h'">8h</td>
+                            <td th:text="${item.observacao}">-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p class="vazio" style="padding: 1rem 0;" th:if="${#lists.isEmpty(itens)}">
+                Nenhum medicamento adicionado ainda.
+            </p>
+
+            <!-- Formulario para adicionar um novo item -->
+            <form method="post" th:action="@{/medico/atendimento/{codigo}/item-receituario(codigo=${consulta.codigo})}"
+                  th:object="${itemReceituarioNovo}">
+
+                <div class="campo">
+                    <label for="medicamentoCodigo">Medicamento</label>
+                    <select id="medicamentoCodigo" th:field="*{medicamentoCodigo}" required>
+                        <option value="">Selecione um medicamento</option>
+                        <option th:each="medicamento : ${medicamentos}"
+                                th:value="${medicamento.codigo}"
+                                th:text="${medicamento.nome} + ' — ' + ${medicamento.dosagem}">
+                            Nome do medicamento
+                        </option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="dosagem">Dosagem (quantidade)</label>
+                    <input type="number" id="dosagem" th:field="*{dosagem}" placeholder="Ex: 1" min="1" required>
+                </div>
+
+                <div class="campo">
+                    <label for="intervaloEntreDoses">Intervalo entre doses (em horas)</label>
+                    <input type="number" id="intervaloEntreDoses" th:field="*{intervaloEntreDoses}" placeholder="Ex: 8" min="1" required>
+                </div>
+
+                <div class="campo">
+                    <label for="itemObservacao">Observação</label>
+                    <input type="text" id="itemObservacao" th:field="*{observacao}" placeholder="Ex: tomar após as refeições">
+                </div>
+
+                <div class="form-acoes">
+                    <button type="submit" class="btn btn-primario">Adicionar medicamento</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

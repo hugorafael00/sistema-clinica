@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Nova consulta')}"></head>
+<body>
+    <header th:replace="~{fragments/header :: nav-atendente}"></header>
+
+    <main>
+        <div class="page-header">
+            <div>
+                <h1>Nova consulta</h1>
+                <p>Relacione um paciente e um médico para marcar a consulta.</p>
+            </div>
+        </div>
+
+        <form class="card" method="post" th:action="@{/atendente/consulta/salvar}" th:object="${consulta}">
+
+            <div class="campo">
+                <label for="pacienteCpf">Paciente</label>
+                <select id="pacienteCpf" th:field="*{pacienteCpf}" required>
+                    <option value="">Selecione um paciente</option>
+                    <option th:each="paciente : ${pacientes}"
+                            th:value="${paciente.cpf}"
+                            th:text="${paciente.nome} + ' — ' + ${paciente.cpf}">
+                        Nome do paciente
+                    </option>
+                </select>
+            </div>
+
+            <div class="campo">
+                <label for="medicoCrm">Médico</label>
+                <select id="medicoCrm" th:field="*{medicoCrm}" required>
+                    <option value="">Selecione um médico</option>
+                    <option th:each="medico : ${medicos}"
+                            th:value="${medico.crm}"
+                            th:text="${medico.nome} + ' — ' + ${medico.especialidade}">
+                        Nome do médico
+                    </option>
+                </select>
+            </div>
+
+            <div class="campo">
+                <label for="dataHora">Data e hora da consulta</label>
+                <input type="datetime-local" id="dataHora" th:field="*{dataHora}" required>
+            </div>
+
+            <div class="campo">
+                <label for="observacao">Observação</label>
+                <textarea id="observacao" th:field="*{observacao}" rows="3" placeholder="Observações sobre a consulta (opcional)"></textarea>
+            </div>
+
+            <div class="form-acoes">
+                <button type="submit" class="btn btn-primario">Marcar consulta</button>
+                <a class="btn btn-secundario" th:href="@{/atendente/consulta}">Cancelar</a>
+            </div>
+        </form>
+    </main>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

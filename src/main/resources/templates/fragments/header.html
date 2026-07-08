@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(titulo)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titulo} + ' · Clínica'">Clínica</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+    <!-- Header/nav da perspectiva do ATENDENTE -->
+    <header class="app-header" th:fragment="nav-atendente">
+        <div class="brand">Sistema Clínica</div>
+        <nav class="app-nav">
+            <span class="perspectiva-label">Atendente</span>
+            <a th:href="@{/atendente/paciente}">Pacientes</a>
+            <a th:href="@{/atendente/medico}">Médicos</a>
+            <a th:href="@{/atendente/medicamento}">Medicamentos</a>
+            <a th:href="@{/atendente/consulta}">Consultas</a>
+            <a th:href="@{/medico/login}">Área do médico</a>
+        </nav>
+    </header>
+
+    <!-- Header simples, sem navegação (usado na tela de login) -->
+    <header class="app-header" th:fragment="nav-guest">
+        <div class="brand">Sistema Clínica</div>
+        <nav class="app-nav">
+            <a th:href="@{/atendente/paciente}">Voltar para atendente</a>
+            <span class="perspectiva-label">Área do médico</span>
+        </nav>
+    </header>
+
+    <!-- Header/nav da perspectiva do MEDICO (logado) -->
+    <header class="app-header" th:fragment="nav-medico">
+        <div class="brand">Sistema Clínica</div>
+        <nav class="app-nav">
+            <span class="perspectiva-label">Médico</span>
+            <a th:href="@{/medico/painel}">Consultas pendentes</a>
+            <a th:href="@{/medico/historico}">Histórico</a>
+            <a th:href="@{/atendente/paciente}">Voltar para atendente</a>
+            <a th:href="@{/medico/logout}">Sair</a>
+        </nav>
+    </header>
+
+</body>
+</html>

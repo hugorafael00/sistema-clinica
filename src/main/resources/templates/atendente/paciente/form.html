@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Paciente')}"></head>
+<body>
+    <header th:replace="~{fragments/header :: nav-atendente}"></header>
+
+    <main>
+        <div class="page-header">
+            <div>
+                <h1 th:text="${paciente.cpf} != null and ${paciente.cpf} != '' ? 'Editar paciente' : 'Novo paciente'">Paciente</h1>
+                <p>Preencha os dados do paciente.</p>
+            </div>
+        </div>
+
+        <form class="card" method="post" th:action="@{/atendente/paciente/salvar}" th:object="${paciente}">
+
+            <div class="campo">
+                <label for="cpf">CPF</label>
+                <input type="text" id="cpf" th:field="*{cpf}" placeholder="000.000.000-00"
+                       th:readonly="${paciente.cpf} != null and ${paciente.cpf} != ''" required>
+            </div>
+
+            <div class="campo">
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" th:field="*{nome}" placeholder="Nome completo" required>
+            </div>
+
+            <div class="campo">
+                <label for="endereco">Endereço</label>
+                <input type="text" id="endereco" th:field="*{endereco}" placeholder="Rua, número, bairro">
+            </div>
+
+            <div class="campo">
+                <label for="contato">Contato</label>
+                <input type="text" id="contato" th:field="*{contato}" placeholder="Telefone ou e-mail">
+            </div>
+
+            <div class="campo">
+                <label for="planoSaude">Plano de saúde</label>
+                <input type="text" id="planoSaude" th:field="*{planoSaude}" placeholder="Nome do plano (opcional)">
+            </div>
+
+            <div class="form-acoes">
+                <button type="submit" class="btn btn-primario">Salvar</button>
+                <a class="btn btn-secundario" th:href="@{/atendente/paciente}">Cancelar</a>
+            </div>
+        </form>
+    </main>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

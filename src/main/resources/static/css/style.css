@@ -1,0 +1,284 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #F4F7F6;
+    --cor-superficie: #FFFFFF;
+    --cor-primaria: #1B4B4A;
+    --cor-primaria-clara: #2E6E6B;
+    --cor-acento: #C99A3C;
+    --cor-texto: #24312F;
+    --cor-texto-suave: #5B6C68;
+    --cor-borda: #DCE6E3;
+    --cor-perigo: #B3453D;
+    --cor-perigo-fundo: #FBEAE8;
+    --raio: 10px;
+    --sombra: 0 1px 3px rgba(20, 40, 38, 0.08), 0 1px 2px rgba(20, 40, 38, 0.06);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.5;
+}
+
+h1, h2, h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    color: var(--cor-primaria);
+    margin: 0 0 0.4em;
+}
+
+a {
+    color: var(--cor-primaria-clara);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* ---------- Header / Nav ---------- */
+
+.app-header {
+    background: var(--cor-primaria);
+    color: white;
+    padding: 0.9rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.app-header .brand {
+    font-family: 'Fraunces', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.app-header .brand::before {
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--cor-acento);
+}
+
+.app-nav {
+    display: flex;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+}
+
+.app-nav a {
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 500;
+    font-size: 0.92rem;
+}
+
+.app-nav a:hover {
+    color: white;
+    text-decoration: none;
+}
+
+.app-nav .perspectiva-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.55);
+    align-self: center;
+}
+
+/* ---------- Layout geral ---------- */
+
+main {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+}
+
+.page-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--cor-borda);
+    padding-bottom: 1rem;
+}
+
+.page-header p {
+    color: var(--cor-texto-suave);
+    margin: 0.2rem 0 0;
+}
+
+/* ---------- Botões ---------- */
+
+.btn {
+    display: inline-block;
+    padding: 0.55rem 1.1rem;
+    border-radius: var(--raio);
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
+.btn-primario {
+    background: var(--cor-primaria);
+    color: white;
+}
+
+.btn-primario:hover {
+    background: var(--cor-primaria-clara);
+    text-decoration: none;
+}
+
+.btn-secundario {
+    background: white;
+    color: var(--cor-primaria);
+    border-color: var(--cor-borda);
+}
+
+.btn-secundario:hover {
+    border-color: var(--cor-primaria-clara);
+    text-decoration: none;
+}
+
+.btn-perigo {
+    background: var(--cor-perigo-fundo);
+    color: var(--cor-perigo);
+    border-color: #F0D2CE;
+}
+
+.btn-perigo:hover {
+    background: var(--cor-perigo);
+    color: white;
+    text-decoration: none;
+}
+
+/* ---------- Tabela ---------- */
+
+.tabela-wrap {
+    background: var(--cor-superficie);
+    border-radius: var(--raio);
+    box-shadow: var(--sombra);
+    overflow: hidden;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead th {
+    text-align: left;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--cor-texto-suave);
+    background: #EEF3F2;
+    padding: 0.85rem 1.1rem;
+}
+
+tbody td {
+    padding: 0.85rem 1.1rem;
+    border-top: 1px solid var(--cor-borda);
+    font-size: 0.95rem;
+}
+
+tbody tr:hover {
+    background: #FAFCFB;
+}
+
+.acoes {
+    display: flex;
+    gap: 0.9rem;
+    white-space: nowrap;
+}
+
+.vazio {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--cor-texto-suave);
+}
+
+/* ---------- Formulário ---------- */
+
+.card {
+    background: var(--cor-superficie);
+    border-radius: var(--raio);
+    box-shadow: var(--sombra);
+    padding: 1.75rem;
+    max-width: 620px;
+}
+
+.campo {
+    margin-bottom: 1.1rem;
+}
+
+.campo label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--cor-texto);
+    margin-bottom: 0.35rem;
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    background: white;
+    color: var(--cor-texto);
+}
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+    outline: 2px solid var(--cor-primaria-clara);
+    outline-offset: 1px;
+}
+
+.form-acoes {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+/* ---------- Badges (usado nas telas do medico depois) ---------- */
+
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.badge-pendente {
+    background: #FBF1DD;
+    color: #8A6111;
+}
+
+.badge-realizada {
+    background: #E4F0EB;
+    color: #1B6B4C;
+}

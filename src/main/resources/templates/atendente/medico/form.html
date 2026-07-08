@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Médico')}"></head>
+<body>
+    <header th:replace="~{fragments/header :: nav-atendente}"></header>
+
+    <main>
+        <div class="page-header">
+            <div>
+                <h1 th:text="${medico.crm} != null and ${medico.crm} != '' ? 'Editar médico' : 'Novo médico'">Médico</h1>
+                <p>Preencha os dados do médico. A senha é usada para login na perspectiva do médico.</p>
+            </div>
+        </div>
+
+        <form class="card" method="post" th:action="@{/atendente/medico/salvar}" th:object="${medico}">
+
+            <div class="campo">
+                <label for="crm">CRM</label>
+                <input type="text" id="crm" th:field="*{crm}" placeholder="Número do CRM"
+                       th:readonly="${medico.crm} != null and ${medico.crm} != ''" required>
+            </div>
+
+            <div class="campo">
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" th:field="*{nome}" placeholder="Nome completo" required>
+            </div>
+
+            <div class="campo">
+                <label for="especialidade">Especialidade</label>
+                <input type="text" id="especialidade" th:field="*{especialidade}" placeholder="Ex: Cardiologia">
+            </div>
+
+            <div class="campo">
+                <label for="contato">Contato</label>
+                <input type="text" id="contato" th:field="*{contato}" placeholder="Telefone ou e-mail">
+            </div>
+
+            <div class="campo">
+                <label for="senha">Senha de acesso</label>
+                <input type="password" id="senha" th:field="*{senha}" placeholder="Senha para login" required>
+            </div>
+
+            <div class="form-acoes">
+                <button type="submit" class="btn btn-primario">Salvar</button>
+                <a class="btn btn-secundario" th:href="@{/atendente/medico}">Cancelar</a>
+            </div>
+        </form>
+    </main>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>
